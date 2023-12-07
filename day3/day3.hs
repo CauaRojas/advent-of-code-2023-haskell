@@ -1,5 +1,6 @@
 import Data.Char (isDigit)
 import Data.Maybe (catMaybes, fromJust, isJust, isNothing)
+import System.Environment (getArgs)
 
 isSymbol :: Char -> Bool
 isSymbol a =
@@ -58,7 +59,8 @@ debugGetMatrixPos :: [String] -> [(Int, Int)] -> String
 debugGetMatrixPos lines = map (\(i, j) -> (lines !! i) !! j)
 
 main = do
-  content <- readFile "day3.txt"
+  fileName <- getArgs
+  content <- readFile (head fileName)
   let linesContent = lines content
       symbols = getSymbolsPos linesContent
       adjacentDigits = filter (not . null) (map (getAdjacentPos linesContent) symbols)
@@ -68,4 +70,5 @@ main = do
       nums = map read numsStr
       result = sum nums
   -- mapM_ print symbols
+  print nums
   print result
